@@ -1,26 +1,53 @@
-@import "tailwindcss";
+/* app/globals.css */
 
+/* Tailwind layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------
+   Global font + base styles
+   --------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* fallback stack (overridden by the Plus Jakarta Sans variable in layout.tsx) */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html, body {
+  height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  color: #111827;        /* gray-900 */
+  background: #f9fafb;   /* gray-50 */
 }
+
+/* Improve focus visibility slightly */
+:focus-visible {
+  outline: 2px solid #111827;   /* gray-900 */
+  outline-offset: 2px;
+}
+
+/* Optional: nicer text selection */
+::selection {
+  background: #d1d5db; /* gray-300 */
+  color: #111827;      /* gray-900 */
+}
+
+/* You can add small component classes here if you like:
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg bg-black px-4 py-2 text-white hover:opacity-90 disabled:opacity-50;
+  }
+  .card {
+    @apply rounded-2xl border bg-white p-5 shadow-sm;
+  }
+}
+*/
