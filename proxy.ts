@@ -2,22 +2,20 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-// Either a *default export* OR a named `proxy` export is required.
-// We'll use a default export here.
 export default function proxy(req: NextRequest) {
-  // Simple protection for /inbox using a header password
+  // Only guard /inbox paths
   if (req.nextUrl.pathname.startsWith("/inbox")) {
+    const cookie = req.cookies.get("ts_inbox_auth")?.value; // set after login
     const pass = process.env.INBOX_PASSWORD;
-    const sent = req.headers.get("x-inbox-password");
-    if (!pass || sent !== pass) {
-      return new NextResponse("Unauthorized", { status: 401 });
+
+    // If not logged in, send to /login
+    if (!cookie || !pass || cookie !== pass) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
     }
   }
-
   return NextResponse.next();
 }
 
-// Limit interception to just /inbox
-export const config = {
-  matcher: ["/inbox/:path*"],
-};
+export const config = { matcher: ["/inbox/:path*"] };
