@@ -1,15 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseService } from "@/lib/supabaseServer";
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }  // 👈 Next 16: params is a Promise
+) {
   try {
+    const { id } = await params;                   // 👈 await it
     const updates = await req.json();
+
     const sb = supabaseService();
 
     const { data, error } = await sb
       .from("bookings")
       .update(updates)
-      .eq("id", params.id)
+      .eq("id", id)
       .select("*")
       .single();
 
