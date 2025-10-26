@@ -1,3 +1,4 @@
+// app/api/bookings/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseService } from "@/lib/supabaseServer";
 

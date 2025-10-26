@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
     const sb = supabaseService();
 
     const public_token = randomUUID().replace(/-/g, "").slice(0, 24);
+
     const { data, error } = await sb
       .from("bookings")
       .insert({ ...payload, public_token })
