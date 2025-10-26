@@ -1,6 +1,7 @@
 // app/inbox/page.tsx
 import { supabaseService } from "@/lib/supabaseServer";
 import ReplyBox from "@/app/components/ReplyBox";
+import CreateBooking from "@/app/components/CreateBooking";
 
 export const dynamic = "force-dynamic";
 
@@ -89,6 +90,7 @@ export default async function InboxPage() {
 
               {/* Reply box, defaults to AI suggestion text */}
               <ReplyBox to={m.from_number} channelId={m.channel_id} initialText={suggestion} />
+              <CreateBooking customerPhone={m.from_number} channelId={m.channel_id} />
             </li>
           );
         })}
